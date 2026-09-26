@@ -1,6 +1,5 @@
 ---
 title: Iris ANN Classifier
-emoji: 🌸
 colorFrom: green
 colorTo: purple
 sdk: docker
@@ -12,6 +11,7 @@ app_port: 7860
 A 3-layer neural network (16 → 8 → 3 units, trained with Keras) that
 identifies an Iris flower's species — *setosa*, *versicolor*, or
 *virginica* — from its sepal and petal measurements.
+**Live Demo:**iris-ann-classifier.com( https://iris-ann-classifier-p2da.onrender.com)
 
 Enter the four measurements in the UI and the model returns the predicted
 species along with its confidence across all three classes.
