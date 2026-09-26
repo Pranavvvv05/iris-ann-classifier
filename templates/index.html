@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iris Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <h1>Iris Field Guide</h1>
+    <p class="masthead__sub">Enter a specimen's measurements to identify its species, using a small neural network trained on Fisher's 1936 Iris dataset.</p>
+  </header>
+
+  <main class="tool">
+
+    <section class="panel panel--measure">
+      <h2>Specimen measurements</h2>
+
+      <div class="field" data-field="sepal_length">
+        <div class="field__row">
+          <label for="sepal_length">Sepal length</label>
+          <output for="sepal_length" id="sepal_length_out">5.8</output>
+        </div>
+        <input type="range" id="sepal_length" min="4.0" max="8.0" step="0.1" value="5.8">
+        <div class="field__ticks"><span>4.0</span><span>8.0 cm</span></div>
+      </div>
+
+      <div class="field" data-field="sepal_width">
+        <div class="field__row">
+          <label for="sepal_width">Sepal width</label>
+          <output for="sepal_width" id="sepal_width_out">3.0</output>
+        </div>
+        <input type="range" id="sepal_width" min="1.8" max="4.5" step="0.1" value="3.0">
+        <div class="field__ticks"><span>1.8</span><span>4.5 cm</span></div>
+      </div>
+
+      <div class="field" data-field="petal_length">
+        <div class="field__row">
+          <label for="petal_length">Petal length</label>
+          <output for="petal_length" id="petal_length_out">3.8</output>
+        </div>
+        <input type="range" id="petal_length" min="1.0" max="7.0" step="0.1" value="3.8">
+        <div class="field__ticks"><span>1.0</span><span>7.0 cm</span></div>
+      </div>
+
+      <div class="field" data-field="petal_width">
+        <div class="field__row">
+          <label for="petal_width">Petal width</label>
+          <output for="petal_width" id="petal_width_out">1.2</output>
+        </div>
+        <input type="range" id="petal_width" min="0.1" max="2.5" step="0.1" value="1.2">
+        <div class="field__ticks"><span>0.1</span><span>2.5 cm</span></div>
+      </div>
+
+      <button id="identify-btn" type="button">Identify specimen</button>
+      <p class="error" id="error-msg" hidden></p>
+    </section>
+
+    <section class="panel panel--result">
+      <div class="specimen" id="specimen">
+
+        <div class="specimen__art" id="art-setosa" data-species="Iris-setosa">
+          <svg viewBox="0 0 200 220" aria-hidden="true">
+            <path class="petal" d="M100 120 C 60 100, 40 60, 55 20 C 75 55, 95 85, 100 120 Z"/>
+            <path class="petal" d="M100 120 C 140 100, 160 60, 145 20 C 125 55, 105 85, 100 120 Z"/>
+            <path class="petal petal--fall" d="M100 120 C 70 140, 55 175, 70 205 C 90 180, 100 150, 100 120 Z"/>
+            <path class="petal petal--fall" d="M100 120 C 130 140, 145 175, 130 205 C 110 180, 100 150, 100 120 Z"/>
+            <line class="stem" x1="100" y1="120" x2="100" y2="218"/>
+          </svg>
+        </div>
+
+        <div class="specimen__art" id="art-versicolor" data-species="Iris-versicolor" hidden>
+          <svg viewBox="0 0 200 220" aria-hidden="true">
+            <path class="petal" d="M100 110 C 55 95, 30 50, 48 15 C 70 50, 92 80, 100 110 Z"/>
+            <path class="petal" d="M100 110 C 145 95, 170 50, 152 15 C 130 50, 108 80, 100 110 Z"/>
+            <path class="petal petal--fall" d="M100 110 C 65 130, 45 170, 62 208 C 85 180, 98 145, 100 110 Z"/>
+            <path class="petal petal--fall" d="M100 110 C 135 130, 155 170, 138 208 C 115 180, 102 145, 100 110 Z"/>
+            <path class="petal petal--fall" d="M100 110 C 100 145, 100 180, 100 210 C 100 180, 100 145, 100 110 Z"/>
+            <line class="stem" x1="100" y1="110" x2="100" y2="218"/>
+          </svg>
+        </div>
+
+        <div class="specimen__art" id="art-virginica" data-species="Iris-virginica" hidden>
+          <svg viewBox="0 0 200 220" aria-hidden="true">
+            <path class="petal" d="M100 105 C 50 90, 20 45, 40 8 C 65 45, 90 78, 100 105 Z"/>
+            <path class="petal" d="M100 105 C 150 90, 180 45, 160 8 C 135 45, 110 78, 100 105 Z"/>
+            <path class="petal petal--fall" d="M100 105 C 60 128, 35 175, 55 212 C 82 182, 97 142, 100 105 Z"/>
+            <path class="petal petal--fall" d="M100 105 C 140 128, 165 175, 145 212 C 118 182, 103 142, 100 105 Z"/>
+            <line class="stem" x1="100" y1="105" x2="100" y2="218"/>
+          </svg>
+        </div>
+
+        <p class="specimen__placeholder" id="placeholder">Set the measurements, then identify the specimen.</p>
+
+        <div class="specimen__label" id="specimen-label" hidden>
+          <p class="specimen__common" id="common-name">Setosa</p>
+          <p class="specimen__latin" id="latin-name">Iris setosa</p>
+        </div>
+      </div>
+
+      <div class="confidence" id="confidence" hidden>
+        <h3>Likelihood by species</h3>
+        <div class="bar" data-species="Iris-setosa">
+          <span class="bar__name">Setosa</span>
+          <div class="bar__track"><div class="bar__fill" id="bar-setosa"></div></div>
+          <span class="bar__pct" id="pct-setosa">0%</span>
+        </div>
+        <div class="bar" data-species="Iris-versicolor">
+          <span class="bar__name">Versicolor</span>
+          <div class="bar__track"><div class="bar__fill" id="bar-versicolor"></div></div>
+          <span class="bar__pct" id="pct-versicolor">0%</span>
+        </div>
+        <div class="bar" data-species="Iris-virginica">
+          <span class="bar__name">Virginica</span>
+          <div class="bar__track"><div class="bar__fill" id="bar-virginica"></div></div>
+          <span class="bar__pct" id="pct-virginica">0%</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="colophon">
+    <p>A 3-layer neural network (16 → 8 → 3 units), trained on the classic 150-specimen Iris dataset.</p>
+  </footer>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
